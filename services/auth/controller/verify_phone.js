@@ -35,6 +35,7 @@ function verify_phone(phone, hashed, code) {
                 };
         }
         catch (e) {
+            console.log(e);
             return { status: 500, content: { message: "مشکلی پیش آمده است" } };
         }
     });

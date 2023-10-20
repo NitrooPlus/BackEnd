@@ -27,6 +27,7 @@ async function verify_phone(phone:string,hashed:string,code:number) {
         content: {sign_up:true},
       };
   } catch (e) {
+    console.log(e)
     return { status: 500, content: { message: "مشکلی پیش آمده است" } };
   }
 }
