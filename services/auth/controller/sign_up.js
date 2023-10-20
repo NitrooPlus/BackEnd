@@ -52,6 +52,8 @@ function sign_up(user) {
                 };
         }
         catch (e) {
+            console.log(process.env.JWT_KEY);
+            console.log(e);
             return { status: 500, content: { message: "مشکلی پیش آمده است" } };
         }
     });

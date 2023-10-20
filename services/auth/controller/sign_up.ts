@@ -58,6 +58,8 @@ async function sign_up(user: any) {
         content: {message:"مشکلی پیش آمده است"},
       };
   } catch (e) {
+    console.log(process.env.JWT_KEY)
+    console.log(e)
     return { status: 500, content: { message: "مشکلی پیش آمده است" } };
   }
 }
