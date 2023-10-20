@@ -16,10 +16,20 @@ const express_1 = require("express");
 const sign_up_1 = __importDefault(require("./controller/sign_up"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const verify_phone_1 = __importDefault(require("./controller/verify_phone"));
+const class_transformer_1 = require("class-transformer");
+const class_validator_1 = require("class-validator");
+const phone_1 = require("./validation/phone");
+const transform_error_1 = __importDefault(require("../../helper/transform_error"));
 const router = (0, express_1.Router)();
 router.post('/send_code', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!req.body.phone)
-        return res.status(400).json({ message: 'شماره تلفن باید موجود باشد' });
+    var _a;
+    //validate user with validation schema start ...
+    const obj = (0, class_transformer_1.plainToInstance)(phone_1.Phone, req.body);
+    const err = yield (0, class_validator_1.validate)(obj);
+    const errObj = (0, transform_error_1.default)(err);
+    if ((_a = Object.keys(errObj)) === null || _a === void 0 ? void 0 : _a[0])
+        return res.status(400).json(errObj);
+    //end
     const token = 700000;
     let hashed = yield bcrypt_1.default.hash(`${req.body.phone}${process.env.BCRYPT_KEY}${token}`, 10);
     res.status(200).json({ hashed });
