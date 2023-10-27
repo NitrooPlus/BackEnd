@@ -12,18 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const get_company_information_1 = __importDefault(require("./controller/get_company_information"));
-const delete_company_1 = __importDefault(require("./controller/delete_company"));
-const router = (0, express_1.Router)();
-router.get('/get_company_information', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let request = req.query;
-    let data = yield (0, get_company_information_1.default)(request.url);
-    res.status(data.status).json(data.content);
-}));
-router.delete('/delete_company', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let request = req.query;
-    let data = yield (0, delete_company_1.default)(request.url);
-    res.status(data.status).json(data.content);
-}));
-exports.default = router;
+const db_1 = __importDefault(require("../../../DB/db"));
+function delete_company(url) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            if (!url)
+                return { status: 400, content: 'نام غرفه باید مشخص باشد' };
+            let data = yield db_1.default.execute(`DELETE FROM 
+    company c
+    where c.english_name='${url}'`);
+            return { status: 200, content: { message: 'عملیات با موفقیت انجام شد' } };
+        }
+        catch (e) {
+            console.log(e);
+            return { status: 500, content: { message: "مشکلی پیش آمده است" } };
+        }
+    });
+}
+exports.default = delete_company;
