@@ -22,6 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 const db_1 = __importDefault(require("./DB/db"));
 const check_auth_1 = require("./helper/check_auth");
 const index_1 = __importDefault(require("./services/auth/index"));
+const index_2 = __importDefault(require("./services/company/index"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ credentials: true, origin: true }));
 app.use(body_parser_1.default.json());
@@ -48,6 +49,7 @@ app.use((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 app.use('/auth', index_1.default);
+app.use('/company', index_2.default);
 app.get('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).json({ message: 'welcome' });
 }));

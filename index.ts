@@ -8,6 +8,7 @@ if (process.env.NODE_ENV !== 'production') {
 import db from './DB/db'
 import { check_auth } from './helper/check_auth'
 import auth_service from './services/auth/index'
+import company_service from './services/company/index'
 
 const app:Express=express()
 
@@ -42,6 +43,7 @@ app.use(async(req:Request,res:Response,next:NextFunction)=>{
 })
 
 app.use('/auth',auth_service)
+app.use('/company',company_service)
 
 app.get('/',async(req:Request,res:Response,next:NextFunction)=>{
 
