@@ -13,14 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("../../../DB/db"));
-function delete_company(url) {
+function delete_company(url, user) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            if (!(user === null || user === void 0 ? void 0 : user.id))
+                return { status: 403, content: { message: "شما توانایی این کار را ندارید" } };
             if (!url)
                 return { status: 400, content: 'نام غرفه باید مشخص باشد' };
             let data = yield db_1.default.execute(`DELETE FROM 
     company c
-    where c.english_name='${url}'`);
+    where c.url='${url}' AND for_user=${user.id}`);
             return { status: 200, content: { message: 'عملیات با موفقیت انجام شد' } };
         }
         catch (e) {

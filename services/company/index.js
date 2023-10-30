@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const get_company_information_1 = __importDefault(require("./controller/get_company_information"));
 const delete_company_1 = __importDefault(require("./controller/delete_company"));
+const create_company_1 = __importDefault(require("./controller/create_company"));
 const router = (0, express_1.Router)();
 router.get('/get_company_information', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let request = req.query;
@@ -23,7 +24,12 @@ router.get('/get_company_information', (req, res, next) => __awaiter(void 0, voi
 }));
 router.delete('/delete_company', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let request = req.query;
-    let data = yield (0, delete_company_1.default)(request.url);
+    let data = yield (0, delete_company_1.default)(request.url, request.user);
+    res.status(data.status).json(data.content);
+}));
+router.post('/create_company', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let request = req.query;
+    let data = yield (0, create_company_1.default)(req.body, request.user);
     res.status(data.status).json(data.content);
 }));
 exports.default = router;
