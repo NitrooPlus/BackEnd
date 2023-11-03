@@ -19,8 +19,8 @@ __decorate([
             return null;
         return value;
     }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'لطفا این فیلد را پر کنید' }),
     (0, class_validator_1.MaxLength)(80, { message: 'این فیلد نباید بیشتر از 80 حرف باشد' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'لطفا این فیلد را پر کنید' }),
     (0, class_transformer_1.Expose)()
 ], User.prototype, "first_name", void 0);
 __decorate([
@@ -29,8 +29,8 @@ __decorate([
             return null;
         return value;
     }),
-    (0, class_validator_1.IsNotEmpty)({ message: 'لطفا این فیلد را پر کنید' }),
     (0, class_validator_1.MaxLength)(80, { message: 'این فیلد نباید بیشتر از 80 حرف باشد' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'لطفا این فیلد را پر کنید' }),
     (0, class_transformer_1.Expose)()
 ], User.prototype, "last_name", void 0);
 __decorate([

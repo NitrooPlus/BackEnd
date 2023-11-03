@@ -10,8 +10,8 @@ export class User{
         return value;
 
     })
-    @IsNotEmpty({message:'لطفا این فیلد را پر کنید'})
     @MaxLength(80,{message:'این فیلد نباید بیشتر از 80 حرف باشد'})
+    @IsNotEmpty({message:'لطفا این فیلد را پر کنید'})
     @Expose()
     first_name:string;
     
@@ -22,8 +22,8 @@ export class User{
         return value;
 
     })
-    @IsNotEmpty({message:'لطفا این فیلد را پر کنید'})
     @MaxLength(80,{message:'این فیلد نباید بیشتر از 80 حرف باشد'})
+    @IsNotEmpty({message:'لطفا این فیلد را پر کنید'})
     @Expose()
     last_name:string;
 
