@@ -61,6 +61,16 @@ export class Company{
     logo:string;
 
 
+    @Transform(({value})=>{
+        if(!value)
+        return null;
+        return value;
+
+    })
+    @Expose()
+    header_image:string;
+
+
 
 
 }

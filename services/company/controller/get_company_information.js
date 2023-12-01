@@ -19,7 +19,7 @@ function get_company_information(url) {
         try {
             if (!url)
                 return { status: 400, content: { message: 'نام غرفه باید مشخص باشد' } };
-            let data = yield db_1.default.execute(`SELECT c.id,c.title,c.url,c.last_seen,c.description,c.logo,c.create_date,count(p.id) as product_count
+            let data = yield db_1.default.execute(`SELECT c.id,c.title,c.url,c.last_seen,c.description,c.logo,c.header_image,c.create_date,count(p.id) as product_count
     FROM 
     company c
     LEFT JOIN products p

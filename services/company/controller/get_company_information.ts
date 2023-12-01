@@ -8,7 +8,7 @@ async function get_company_information(url:string) {
     if(!url)
         return {status:400,content:{message:'نام غرفه باید مشخص باشد'}}
 
-    let data:any=await db.execute(`SELECT c.id,c.title,c.url,c.last_seen,c.description,c.logo,c.create_date,count(p.id) as product_count
+    let data:any=await db.execute(`SELECT c.id,c.title,c.url,c.last_seen,c.description,c.logo,c.header_image,c.create_date,count(p.id) as product_count
     FROM 
     company c
     LEFT JOIN products p

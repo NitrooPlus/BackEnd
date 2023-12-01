@@ -60,6 +60,14 @@ __decorate([
     }),
     (0, class_transformer_1.Expose)()
 ], Company.prototype, "logo", void 0);
+__decorate([
+    (0, class_transformer_1.Transform)(({ value }) => {
+        if (!value)
+            return null;
+        return value;
+    }),
+    (0, class_transformer_1.Expose)()
+], Company.prototype, "header_image", void 0);
 exports.Company = Company = __decorate([
     (0, class_transformer_1.Exclude)()
 ], Company);
