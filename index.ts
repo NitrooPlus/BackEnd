@@ -11,6 +11,8 @@ import auth_service from './services/auth/index'
 import company_service from './services/company/index'
 import product_service from './services/product/index'
 import basket_service from './services/basket/index'
+import general_service from './services/general/index'
+import path from "path"
 
 const app:Express=express()
 
@@ -44,10 +46,13 @@ app.use(async(req:Request,res:Response,next:NextFunction)=>{
 
 })
 
+app.use(express.static(path.join(__dirname,'public')))
+
 app.use('/auth',auth_service)
 app.use('/company',company_service)
 app.use('/product',product_service)
 app.use('/basket',basket_service)
+app.use('/general',general_service)
 app.get('/',async(req:Request,res:Response,next:NextFunction)=>{
 
     res.status(200).json({message:'welcome'})
