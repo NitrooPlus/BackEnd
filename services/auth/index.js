@@ -38,7 +38,7 @@ router.post('/verify_phone', (req, res, next) => __awaiter(void 0, void 0, void 
     let data = yield (0, verify_phone_1.default)(req.body.phone, req.body.hashed, req.body.code);
     if (data.content.token) {
         let content = data.content;
-        res.cookie(process.env.COOKIE_NAME || 'cookie', content.token, { httpOnly: true, expires: new Date(Date.now() + 900000000), sameSite: "none" });
+        res.cookie(process.env.COOKIE_NAME || 'cookie', content.token, { expires: new Date(Date.now() + 900000000), sameSite: "none" });
         res.status(data.status).json(data.content);
     }
     else
@@ -48,15 +48,15 @@ router.post('/sign_up', (req, res, next) => __awaiter(void 0, void 0, void 0, fu
     let data = yield (0, sign_up_1.default)(req.body);
     if (data.status == 200) {
         let content = data.content;
-        res.cookie(process.env.COOKIE_NAME || 'cookie', content.token, { httpOnly: true, expires: new Date(Date.now() + 900000000), sameSite: "none" });
+        res.cookie(process.env.COOKIE_NAME || 'cookie', content.token, { expires: new Date(Date.now() + 900000000), sameSite: "none" });
         res.status(data.status).json(data.content);
     }
     else
         res.status(data.status).json(data.content);
 }));
 router.get('/log_out', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    res.cookie(process.env.COOKIE_NAME || 'cookie', 'deleted', { httpOnly: true });
-    res.clearCookie(process.env.COOKIE_NAME || 'cookie', { httpOnly: true });
+    res.cookie(process.env.COOKIE_NAME || 'cookie', 'deleted');
+    res.clearCookie(process.env.COOKIE_NAME || 'cookie');
     res.json({ status: 'token deleted' });
     res.end();
 }));

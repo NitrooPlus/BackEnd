@@ -36,7 +36,7 @@ router.post('/verify_phone',async(req:Request,res:Response,next:NextFunction)=>{
 
     if(data.content.token){
         let content:any=data.content
-        res.cookie(process.env.COOKIE_NAME || 'cookie',content.token,{httpOnly:true,expires: new Date(Date.now() + 900000000),sameSite:"none"})
+        res.cookie(process.env.COOKIE_NAME || 'cookie',content.token,{expires: new Date(Date.now() + 900000000),sameSite:"none"})
         res.status(data.status).json(data.content)
     }
     else
@@ -50,7 +50,7 @@ router.post('/sign_up',async(req:Request,res:Response,next:NextFunction)=>{
 
     if(data.status==200){
         let content:any=data.content
-        res.cookie(process.env.COOKIE_NAME || 'cookie',content.token,{httpOnly:true,expires: new Date(Date.now() + 900000000),sameSite:"none"})
+        res.cookie(process.env.COOKIE_NAME || 'cookie',content.token,{expires: new Date(Date.now() + 900000000),sameSite:"none"})
         res.status(data.status).json(data.content)
     }
     else
@@ -60,8 +60,8 @@ router.post('/sign_up',async(req:Request,res:Response,next:NextFunction)=>{
 
 router.get('/log_out',async(req:Request,res:Response,next:NextFunction)=>{
 
-    res.cookie(process.env.COOKIE_NAME || 'cookie','deleted',{httpOnly:true})
-    res.clearCookie(process.env.COOKIE_NAME || 'cookie',{httpOnly:true})
+    res.cookie(process.env.COOKIE_NAME || 'cookie','deleted')
+    res.clearCookie(process.env.COOKIE_NAME || 'cookie')
     res.json({status:'token deleted'})
     res.end()
 
