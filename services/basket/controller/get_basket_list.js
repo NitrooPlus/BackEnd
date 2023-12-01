@@ -23,6 +23,7 @@ function get_basket_list(user) {
         on p.id=b.product_id
         join company c
         on p.company_id=c.id
+        where user_id=${user.id}
         group by p.id`);
             return { status: 200, content: (data === null || data === void 0 ? void 0 : data[0]) || [] };
         }

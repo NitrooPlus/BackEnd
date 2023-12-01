@@ -33,7 +33,8 @@ app.use((0, cookie_parser_1.default)());
 app.use((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d;
     try {
-        const result = yield (0, check_auth_1.check_auth)(req.headers['Authorization'] || ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a[process.env.COOKIE_NAME || 'cookie']), (dec) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(req.headers['authorization'], req.headers['Authorization']);
+        const result = yield (0, check_auth_1.check_auth)(req.headers['authorization'] || ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a[process.env.COOKIE_NAME || 'cookie']), (dec) => __awaiter(void 0, void 0, void 0, function* () {
             return true;
         }));
         if (result.status == 200 && ((_b = result === null || result === void 0 ? void 0 : result.decoded) === null || _b === void 0 ? void 0 : _b.id)) {
