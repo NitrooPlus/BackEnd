@@ -1,6 +1,6 @@
 import {Request,Response,NextFunction,Router} from 'express'
-import {CustomerProfile} from './controller/customer_profile'
-import {validateCustomerProfile} from './validation/customer_profile'
+import {CustomerProfile} from './controller/CustomerProfile'
+import {validateCustomerProfile} from './validation/CustomerProfile'
 
 const router=Router()
 

@@ -1,4 +1,4 @@
-import {CustomerProfile} from '../controller/customer_profile';
+import {CustomerProfile} from '../controller/CustomerProfile';
 
 export function validateCustomerProfile(customerProfile: CustomerProfile): Error | null {
 
