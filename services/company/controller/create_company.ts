@@ -23,8 +23,8 @@ async function create_company(company:any,user:any) {
     //end
 
 
-    await db.execute(`INSERT INTO company (title,url,location,logo,description,for_user)
-    VALUES ('${obj.title}','${obj.url}','${obj.location}',${obj.logo ? `'${obj.logo}'`:null},${obj.description ? `'${obj.description}'`:null},${user.id})`);
+    await db.execute(`INSERT INTO company (title,url,location,logo,header_image,description,for_user)
+    VALUES ('${obj.title}','${obj.url}','${obj.location}',${obj.logo ? `'${obj.logo}'`:null},${obj.header_image ? `'${obj.header_image}'`:null},${obj.description ? `'${obj.description}'`:null},${user.id})`);
 
     return {status:200,content:{message:'عملیات با موفقیت انجام شد'}}
 
