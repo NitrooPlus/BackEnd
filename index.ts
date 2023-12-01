@@ -21,8 +21,8 @@ app.use(cookie_parser())
 
 app.use(async(req:Request,res:Response,next:NextFunction)=>{
     try{
-
-    const result:any=await check_auth(req.headers['Authorization'] || req.cookies?.[process.env.COOKIE_NAME || 'cookie'] ,async(dec)=>{
+    console.log(req.headers['authorization'],req.headers['Authorization'])
+    const result:any=await check_auth(req.headers['authorization'] || req.cookies?.[process.env.COOKIE_NAME || 'cookie'] ,async(dec)=>{
         return true
     })
 
