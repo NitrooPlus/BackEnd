@@ -12,6 +12,8 @@ import company_service from './services/company/index'
 import product_service from './services/product/index'
 import basket_service from './services/basket/index'
 import general_service from './services/general/index'
+import comment_service from './services/comment/index'
+import rate_service from './services/rate/index'
 import path from "path"
 
 const app:Express=express()
@@ -52,6 +54,8 @@ app.use('/auth',auth_service)
 app.use('/company',company_service)
 app.use('/product',product_service)
 app.use('/basket',basket_service)
+app.use('/rate',rate_service)
+app.use('comment',comment_service)
 app.use('/general',general_service)
 app.get('/',async(req:Request,res:Response,next:NextFunction)=>{
 
