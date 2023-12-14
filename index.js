@@ -26,6 +26,7 @@ const index_2 = __importDefault(require("./services/company/index"));
 const index_3 = __importDefault(require("./services/product/index"));
 const index_4 = __importDefault(require("./services/basket/index"));
 const index_5 = __importDefault(require("./services/general/index"));
+const index_6 = __importDefault(require("./services/search/index"));
 const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({ credentials: true, origin: true }));
@@ -59,6 +60,7 @@ app.use('/company', index_2.default);
 app.use('/product', index_3.default);
 app.use('/basket', index_4.default);
 app.use('/general', index_5.default);
+app.use('/search', index_6.default);
 app.get('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).json({ message: 'welcome' });
 }));
