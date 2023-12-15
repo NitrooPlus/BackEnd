@@ -2,6 +2,7 @@ import {Request,Response,NextFunction,Router} from 'express'
 import add_to_basket from './controller/add_to_basket'
 import delete_from_basket from './controller/delete_from_basket'
 import get_basket_list from './controller/get_basket_list'
+import check_out from './controller/checkout'
 
 
 const router=Router()
@@ -20,6 +21,18 @@ router.post('/add_to_basket',async(req:Request,res:Response,next:NextFunction)=>
     let request:any=req.query
 
     let data=await add_to_basket(request.user,req.body.product_id)
+
+    res.status(data.status).json(data.content)
+
+})
+
+
+router.post('/check_out',async(req:Request,res:Response,next:NextFunction)=>{
+    let request:any=req.query
+
+    console.log("body",req.body)
+
+    let data=await check_out(request.user,req.body.products)
 
     res.status(data.status).json(data.content)
 
