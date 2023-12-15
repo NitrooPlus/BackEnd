@@ -12,9 +12,11 @@ async function search_product(
         let a = serach_algorithm(query);
   
         let product_list: any[] =
-          await db.query(`SELECT title,url,price
-          FRom products
-          WHERE  MATCH(title)
+          await db.query(`SELECT p.title,p.url,p.price,p.images,c.title as company_title,c.url as company_url, c.logo as company_logo, c.header_image as company_header_image
+          FRom products p
+          JOIN company c
+          ON c.id=p.company_id
+          WHERE  MATCH(p.title)
           AGAINST('${a}' IN BOOLEAN MODE)
           Limit ${skip},${count}`);
   
@@ -23,8 +25,10 @@ async function search_product(
         return { status: 200, content: product_list };
       } else {
         let product_list: any[] =
-          await db.query(`SELECT title,url,price
-          FRom products
+          await db.query(`SELECT p.title,p.url,p.price,p.images,c.title as company_title,c.url as company_url, c.logo as company_logo, c.header_image as company_header_image
+          FRom products p
+          JOIN company c
+          ON c.id=p.company_id
           Limit ${skip},${count}
           `);
   

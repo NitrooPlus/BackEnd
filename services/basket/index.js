@@ -16,6 +16,7 @@ const express_1 = require("express");
 const add_to_basket_1 = __importDefault(require("./controller/add_to_basket"));
 const delete_from_basket_1 = __importDefault(require("./controller/delete_from_basket"));
 const get_basket_list_1 = __importDefault(require("./controller/get_basket_list"));
+const checkout_1 = __importDefault(require("./controller/checkout"));
 const router = (0, express_1.Router)();
 router.get('/get_basket_list', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let request = req.query;
@@ -25,6 +26,12 @@ router.get('/get_basket_list', (req, res, next) => __awaiter(void 0, void 0, voi
 router.post('/add_to_basket', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let request = req.query;
     let data = yield (0, add_to_basket_1.default)(request.user, req.body.product_id);
+    res.status(data.status).json(data.content);
+}));
+router.post('/check_out', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let request = req.query;
+    console.log("body", req.body);
+    let data = yield (0, checkout_1.default)(request.user, req.body.products);
     res.status(data.status).json(data.content);
 }));
 router.delete('/delete_from_basket', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

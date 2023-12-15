@@ -20,17 +20,21 @@ function search_product(query, skip, count) {
         try {
             if (query) {
                 let a = (0, search_algorithm_1.default)(query);
-                let product_list = yield db_1.default.query(`SELECT title,url,price
-          FRom products
-          WHERE  MATCH(title)
+                let product_list = yield db_1.default.query(`SELECT p.title,p.url,p.price,p.images,c.title as company_title,c.url as company_url, c.logo as company_logo, c.header_image as company_header_image
+          FRom products p
+          JOIN company c
+          ON c.id=p.company_id
+          WHERE  MATCH(p.title)
           AGAINST('${a}' IN BOOLEAN MODE)
           Limit ${skip},${count}`);
                 product_list = ((_a = product_list === null || product_list === void 0 ? void 0 : product_list[0]) === null || _a === void 0 ? void 0 : _a.length) > 0 ? product_list === null || product_list === void 0 ? void 0 : product_list[0] : [];
                 return { status: 200, content: product_list };
             }
             else {
-                let product_list = yield db_1.default.query(`SELECT title,url,price
-          FRom products
+                let product_list = yield db_1.default.query(`SELECT p.title,p.url,p.price,p.images,c.title as company_title,c.url as company_url, c.logo as company_logo, c.header_image as company_header_image
+          FRom products p
+          JOIN company c
+          ON c.id=p.company_id
           Limit ${skip},${count}
           `);
                 product_list = ((_b = product_list === null || product_list === void 0 ? void 0 : product_list[0]) === null || _b === void 0 ? void 0 : _b.length) > 0 ? product_list === null || product_list === void 0 ? void 0 : product_list[0] : [];
