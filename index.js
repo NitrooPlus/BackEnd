@@ -16,8 +16,8 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+    require("dotenv").config();
 }
 const db_1 = __importDefault(require("./DB/db"));
 const check_auth_1 = require("./helper/check_auth");
@@ -28,7 +28,17 @@ const index_4 = __importDefault(require("./services/basket/index"));
 const index_5 = __importDefault(require("./services/general/index"));
 const index_6 = __importDefault(require("./services/search/index"));
 const path_1 = __importDefault(require("path"));
+const http_1 = __importDefault(require("http"));
+const socket_io_1 = __importDefault(require("socket.io"));
+const IoServer_1 = require("./services/chat/IoServer");
 const app = (0, express_1.default)();
+const server = http_1.default.createServer(app);
+const io = new socket_io_1.default.Server(server, {
+    cors: {
+        origin: "*",
+    },
+});
+(0, IoServer_1.chat_server)(io);
 app.use((0, cors_1.default)({ credentials: true, origin: true }));
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
@@ -36,8 +46,9 @@ app.use((0, cookie_parser_1.default)());
 app.use((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d;
     try {
-        console.log(req.headers['authorization'], req.headers['Authorization']);
-        const result = yield (0, check_auth_1.check_auth)(req.headers['authorization'] || ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a[process.env.COOKIE_NAME || 'cookie']), (dec) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(req.headers["authorization"], req.headers["Authorization"]);
+        const result = yield (0, check_auth_1.check_auth)(req.headers["authorization"] ||
+            ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a[process.env.COOKIE_NAME || "cookie"]), (dec) => __awaiter(void 0, void 0, void 0, function* () {
             return true;
         }));
         if (result.status == 200 && ((_b = result === null || result === void 0 ? void 0 : result.decoded) === null || _b === void 0 ? void 0 : _b.id)) {
@@ -54,14 +65,14 @@ app.use((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         next();
     }
 }));
-app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
-app.use('/auth', index_1.default);
-app.use('/company', index_2.default);
-app.use('/product', index_3.default);
-app.use('/basket', index_4.default);
-app.use('/general', index_5.default);
-app.use('/search', index_6.default);
-app.get('/', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    res.status(200).json({ message: 'welcome' });
+app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
+app.use("/auth", index_1.default);
+app.use("/company", index_2.default);
+app.use("/product", index_3.default);
+app.use("/basket", index_4.default);
+app.use("/general", index_5.default);
+app.use("/search", index_6.default);
+app.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    res.status(200).json({ message: "welcome" });
 }));
-app.listen(process.env.PORT ? +process.env.PORT : 8000);
+server.listen(process.env.PORT ? +process.env.PORT : 8000);
