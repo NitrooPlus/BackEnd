@@ -3,6 +3,13 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { check_auth } from "../../helper/check_auth";
 import db from "../../DB/db";
 
+const save_msg = (from: string, to: string, text: string) => {
+  try {
+    db.execute(`INSERT INTO chat (sender,reciver,text)
+  VALUES('${from}','${to}','${text}')`);
+  } catch (e) {}
+};
+
 export function chat_server(io: socket.Server<DefaultEventsMap, any>) {
   io.on("connection", async (socket) => {
     console.log(socket.id, socket.handshake.headers.authorization);
@@ -22,7 +29,7 @@ export function chat_server(io: socket.Server<DefaultEventsMap, any>) {
 
       if (users?.[0]?.[0]) socket.data.user = users[0][0];
     }
-    if (socket.data.user || result.decoded.id) {
+    if (socket.data?.user || result?.decoded?.id) {
       console.log(`socket join => ${result.decoded.id}`);
       socket.join(result?.decoded?.id);
       socket.data.user?.company_arr?.forEach((element: string) => {
@@ -36,6 +43,7 @@ export function chat_server(io: socket.Server<DefaultEventsMap, any>) {
         }
         if (msg.to) {
           console.log("message : " + msg);
+          save_msg(form, msg.to, msg.text);
           io.to(msg.to).emit("message", { ...msg, from: form });
         }
       });
