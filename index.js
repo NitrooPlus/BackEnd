@@ -27,6 +27,7 @@ const index_3 = __importDefault(require("./services/product/index"));
 const index_4 = __importDefault(require("./services/basket/index"));
 const index_5 = __importDefault(require("./services/general/index"));
 const index_6 = __importDefault(require("./services/search/index"));
+const index_7 = __importDefault(require("./services/chat/index"));
 const path_1 = __importDefault(require("path"));
 const http_1 = __importDefault(require("http"));
 const socket_io_1 = __importDefault(require("socket.io"));
@@ -72,6 +73,7 @@ app.use("/product", index_3.default);
 app.use("/basket", index_4.default);
 app.use("/general", index_5.default);
 app.use("/search", index_6.default);
+app.use("/chat", index_7.default);
 app.get("/", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(200).json({ message: "welcome" });
 }));

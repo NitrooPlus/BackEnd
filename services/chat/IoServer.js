@@ -15,9 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.chat_server = void 0;
 const check_auth_1 = require("../../helper/check_auth");
 const db_1 = __importDefault(require("../../DB/db"));
+const save_msg = (from, to, text) => {
+    try {
+        db_1.default.execute(`INSERT INTO chat (sender,reciver,text)
+  VALUES('${from}','${to}','${text}')`);
+    }
+    catch (e) { }
+};
 function chat_server(io) {
     io.on("connection", (socket) => __awaiter(this, void 0, void 0, function* () {
-        var _a, _b, _c, _d, _e, _f;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         console.log(socket.id, socket.handshake.headers.authorization);
         const result = yield (0, check_auth_1.check_auth)(socket.handshake.headers.authorization, (dec) => __awaiter(this, void 0, void 0, function* () {
             return true;
@@ -29,10 +36,10 @@ function chat_server(io) {
             if ((_c = users === null || users === void 0 ? void 0 : users[0]) === null || _c === void 0 ? void 0 : _c[0])
                 socket.data.user = users[0][0];
         }
-        if (socket.data.user || result.decoded.id) {
+        if (((_d = socket.data) === null || _d === void 0 ? void 0 : _d.user) || ((_e = result === null || result === void 0 ? void 0 : result.decoded) === null || _e === void 0 ? void 0 : _e.id)) {
             console.log(`socket join => ${result.decoded.id}`);
-            socket.join((_d = result === null || result === void 0 ? void 0 : result.decoded) === null || _d === void 0 ? void 0 : _d.id);
-            (_f = (_e = socket.data.user) === null || _e === void 0 ? void 0 : _e.company_arr) === null || _f === void 0 ? void 0 : _f.forEach((element) => {
+            socket.join((_f = result === null || result === void 0 ? void 0 : result.decoded) === null || _f === void 0 ? void 0 : _f.id);
+            (_h = (_g = socket.data.user) === null || _g === void 0 ? void 0 : _g.company_arr) === null || _h === void 0 ? void 0 : _h.forEach((element) => {
                 console.log(`socket join => ${element}`);
                 socket.join(element);
             });
@@ -44,6 +51,7 @@ function chat_server(io) {
                 }
                 if (msg.to) {
                     console.log("message : " + msg);
+                    save_msg(form, msg.to, msg.text);
                     io.to(msg.to).emit("message", Object.assign(Object.assign({}, msg), { from: form }));
                 }
             });
