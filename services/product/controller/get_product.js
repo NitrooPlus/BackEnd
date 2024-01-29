@@ -22,7 +22,7 @@ function get_product(url, company_url) {
                     status: 400,
                     content: { message: "نام غرفه و محصول باید مشخص باشد" },
                 };
-            let data = yield db_1.default.execute(`SELECT p.*,c.url as company_url,c.title as company_name FROM products p
+            let data = yield db_1.default.execute(`SELECT p.*,c.url as company_url,c.title as company_name,c.for_user FROM products p
     JOIN company c
     ON c.id=p.company_id
     WHERE c.url='${company_url}' AND p.url='${url}'`);

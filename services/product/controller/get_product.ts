@@ -11,7 +11,7 @@ async function get_product(url: string, company_url: string) {
       };
 
     let data: any =
-      await db.execute(`SELECT p.*,c.url as company_url,c.title as company_name FROM products p
+      await db.execute(`SELECT p.*,c.url as company_url,c.title as company_name,c.for_user FROM products p
     JOIN company c
     ON c.id=p.company_id
     WHERE c.url='${company_url}' AND p.url='${url}'`);
