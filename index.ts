@@ -14,6 +14,7 @@ import basket_service from "./services/basket/index";
 import general_service from "./services/general/index";
 import search_service from "./services/search/index";
 import chat_service from "./services/chat/index";
+import profile_service from "./services/customer/index";
 import path from "path";
 import http from "http";
 import socket from "socket.io";
@@ -69,6 +70,7 @@ app.use("/basket", basket_service);
 app.use("/general", general_service);
 app.use("/search", search_service);
 app.use("/chat", chat_service);
+app.use("/profile", profile_service);
 app.get("/", async (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json({ message: "welcome" });
 });
