@@ -21,11 +21,14 @@ router.get(
   "/my_rooms",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let data: any = await db.execute(`SELECT distinct reciver FROM test.chat
-      where sender IN ('${req.query.user}')
-      UNION
-      SELECT distinct sender FROM test.chat
-      where reciver IN ('${req.query.user}');`);
+      let data: any =
+        await db.execute(`SELECT u.* from (SELECT distinct reciver FROM test.chat
+        where sender IN ('${req.query.user}')
+        UNION
+        SELECT distinct sender FROM test.chat
+        where reciver IN ('${req.query.user}'))t
+        JOIN user u
+        ON t.reciver=u.id;`);
 
       res.status(200).json(data[0]);
     } catch (e) {
