@@ -13,31 +13,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("../../DB/db"));
-const get_company_information_1 = __importDefault(require("../../services/company/controller/get_company_information"));
-describe("/get_company_information", () => {
+const get_product_1 = __importDefault(require("../../services/product/controller/get_product"));
+describe("/get_product", () => {
     it("Bad request", () => __awaiter(void 0, void 0, void 0, function* () {
-        let response = yield (0, get_company_information_1.default)("");
+        let response = yield (0, get_product_1.default)("", "");
         expect(response).toEqual({
             status: 400,
-            content: { message: "نام غرفه باید مشخص باشد" },
+            content: { message: "نام غرفه و محصول باید مشخص باشد" },
         });
     }));
     it("Correct request", () => __awaiter(void 0, void 0, void 0, function* () {
         db_1.default.execute = jest.fn().mockResolvedValue([[1]]);
-        const response = yield (0, get_company_information_1.default)("correct value");
+        const response = yield (0, get_product_1.default)("correct value", "correct value");
         expect(response).toEqual({ status: 200, content: 1 });
     }));
     it("Not found", () => __awaiter(void 0, void 0, void 0, function* () {
         db_1.default.execute = jest.fn().mockResolvedValue([]);
-        const response = yield (0, get_company_information_1.default)("wrong value");
+        const response = yield (0, get_product_1.default)("correct value", "correct value");
         expect(response).toEqual({
             status: 404,
-            content: { message: "غرفه یافت نشد" },
+            content: { message: "محصول یافت نشد" },
         });
     }));
     it("Internal error", () => __awaiter(void 0, void 0, void 0, function* () {
         db_1.default.execute = jest.fn().mockRejectedValue(new Error());
-        const response = yield (0, get_company_information_1.default)("wrong value");
+        const response = yield (0, get_product_1.default)("wrong value", "wrong value");
         expect(response).toEqual({
             status: 500,
             content: { message: "مشکلی پیش آمده است" },

@@ -13,31 +13,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("../../DB/db"));
-const get_company_information_1 = __importDefault(require("../../services/company/controller/get_company_information"));
-describe("/get_company_information", () => {
-    it("Bad request", () => __awaiter(void 0, void 0, void 0, function* () {
-        let response = yield (0, get_company_information_1.default)("");
+const create_company_1 = __importDefault(require("../../services/company/controller/create_company"));
+describe("/create_company", () => {
+    it("unAuthorized request", () => __awaiter(void 0, void 0, void 0, function* () {
+        let response = yield (0, create_company_1.default)({}, {});
         expect(response).toEqual({
-            status: 400,
-            content: { message: "نام غرفه باید مشخص باشد" },
+            status: 403,
+            content: { message: "شما توانایی این کار را ندارید" },
         });
     }));
-    it("Correct request", () => __awaiter(void 0, void 0, void 0, function* () {
-        db_1.default.execute = jest.fn().mockResolvedValue([[1]]);
-        const response = yield (0, get_company_information_1.default)("correct value");
-        expect(response).toEqual({ status: 200, content: 1 });
+    it("Bad request", () => __awaiter(void 0, void 0, void 0, function* () {
+        let response = yield (0, create_company_1.default)({}, { id: 1 });
+        expect(response.status).toBe(400);
     }));
-    it("Not found", () => __awaiter(void 0, void 0, void 0, function* () {
+    it("Correct request", () => __awaiter(void 0, void 0, void 0, function* () {
         db_1.default.execute = jest.fn().mockResolvedValue([]);
-        const response = yield (0, get_company_information_1.default)("wrong value");
+        let response = yield (0, create_company_1.default)({ location: "1", url: "1", title: "1" }, { id: 1 });
         expect(response).toEqual({
-            status: 404,
-            content: { message: "غرفه یافت نشد" },
+            status: 200,
+            content: { message: "عملیات با موفقیت انجام شد" },
         });
     }));
     it("Internal error", () => __awaiter(void 0, void 0, void 0, function* () {
         db_1.default.execute = jest.fn().mockRejectedValue(new Error());
-        const response = yield (0, get_company_information_1.default)("wrong value");
+        let response = yield (0, create_company_1.default)({ location: "1", url: "1", title: "1" }, { id: 1 });
         expect(response).toEqual({
             status: 500,
             content: { message: "مشکلی پیش آمده است" },

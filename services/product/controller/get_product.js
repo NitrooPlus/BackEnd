@@ -18,7 +18,10 @@ function get_product(url, company_url) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             if (!url || !company_url)
-                return { status: 400, content: { message: 'نام غرفه و محصول باید مشخص باشد' } };
+                return {
+                    status: 400,
+                    content: { message: "نام غرفه و محصول باید مشخص باشد" },
+                };
             let data = yield db_1.default.execute(`SELECT p.*,c.url as company_url,c.title as company_name FROM products p
     JOIN company c
     ON c.id=p.company_id
@@ -26,7 +29,7 @@ function get_product(url, company_url) {
             if ((_a = data === null || data === void 0 ? void 0 : data[0]) === null || _a === void 0 ? void 0 : _a[0])
                 return { status: 200, content: data[0][0] };
             else
-                return { status: 404, content: { message: 'غرفه یافت نشد' } };
+                return { status: 404, content: { message: "محصول یافت نشد" } };
         }
         catch (e) {
             console.log(e);
