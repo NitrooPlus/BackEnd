@@ -16,4 +16,4 @@ jobs:
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
         run: |
-          npx @liara/cli@5 deploy --port=8000 --app="nitroplus" --api-token="$LIARA_TOKEN" --no-app-logs
+          npx @liara/cli@5 deploy --platform=node --port=8000 --app="nitroplus" --api-token="$LIARA_TOKEN" --no-app-logs
