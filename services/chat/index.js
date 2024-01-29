@@ -25,4 +25,17 @@ router.get("/history", (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         res.status(500).json({ message: "مشکلی پیش آمده است" });
     }
 }));
+router.get("/my_rooms", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let data = yield db_1.default.execute(`SELECT distinct reciver FROM test.chat
+      where sender IN ('${req.query.user}')
+      UNION
+      SELECT distinct sender FROM test.chat
+      where reciver IN ('${req.query.user}');`);
+        res.status(200).json(data[0]);
+    }
+    catch (e) {
+        res.status(500).json({ message: "مشکلی پیش آمده است" });
+    }
+}));
 exports.default = router;
