@@ -1,0 +1,19 @@
+name: CD-Liara
+on:
+  push:
+    branches:
+      - feat/CI-CD
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: update-liara
+        env:
+          LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+        run: |
+          npx @liara/cli@5 deploy --port=8000 --app="nitroplus" --api-token="$LIARA_TOKEN" --no-app-logs
