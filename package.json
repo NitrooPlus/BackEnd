@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --runInBand",
-    "start": "tsc && node index.js"
+    "start": "node index.js"
   },
   "author": "Reza Noori",
   "license": "ISC",
