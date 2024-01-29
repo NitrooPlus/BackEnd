@@ -19,7 +19,7 @@ function get_customer_info(user) {
             let data = yield db_1.default.execute(`SELECT * FROM user u where u.id='${user.id}'`);
             if (!(user === null || user === void 0 ? void 0 : user.id))
                 return { status: 403, content: { message: "شما توانایی این کار را ندارید" } };
-            return { status: 200, content: data };
+            return { status: 200, content: data[0][0] };
         }
         catch (e) {
             return { status: 500, content: { message: "مشکلی پیش آمده است" } };
